@@ -23,6 +23,8 @@ func main() {
 	if err != nil {
 		log.Printf("读取配置文件失败: %v", err.Error())
 	}
+	//初始化Redis
+	//config配置请前往 config/app.json 修改
 	utils.InitRedisUtil(conf.RedisConfig.Addr, conf.RedisConfig.Port, conf.RedisConfig.Password)
 	handlers.InitHandlers()
 	logger := enableLog()
@@ -48,14 +50,13 @@ func main() {
 	//添加路由
 	routers.RegisterRouter(g)
 	// 启动服务
-	err = g.Run(":" + conf.AppPort) //
+	err = g.Run(":" + conf.AppPort) //服务监听端口请前往 config/app.json 修改
 	if err != nil {
 		log.Fatalf("failed to start server: %v", err)
 	}
 }
 
 func enableLog() *lumberjack.Logger {
-	// Set up the logger
 	var logger *lumberjack.Logger
 	logger = &lumberjack.Logger{
 		Filename: "logs/go_robot.log",
@@ -64,11 +65,8 @@ func enableLog() *lumberjack.Logger {
 	}
 
 	fmt.Printf("logger %T\n", logger)
-
-	// Set up the logger to write to both file and console
 	log.SetOutput(io.MultiWriter(logger, os.Stdout))
 	log.SetFlags(log.Ldate | log.Ltime)
-	// Write some log messages
 	log.Println("Starting application...")
 
 	return logger
