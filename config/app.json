@@ -1,0 +1,12 @@
+{
+  "app_name": "Dingtalk_Bot",
+  "app_model": "debug",
+  "app_host": "localhost",
+  "app_port": "80",
+  "redis_config": {
+    "addr": "localhost",
+    "port": 6379,
+    "password": "927919732",
+    "db": 0
+  }
+}
